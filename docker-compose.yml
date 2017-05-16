@@ -1,0 +1,12 @@
+version: '3'
+services:
+  client:
+    build: client
+    depends_on:
+      - datapower
+  datapower:
+    build: datapower
+    depends_on:
+      - backend
+  backend:
+    image: hstenzel/nodejs-hostname-automatic

@@ -8,6 +8,8 @@ services:
       - CONTINUOUS=true
   datapower:
     build: datapower
+    tty: true
+    stdin_open: true
     depends_on:
       - backend
     volumes:

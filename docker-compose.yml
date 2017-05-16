@@ -6,6 +6,8 @@ services:
       - datapower
   datapower:
     build: datapower
+    tty: true
+    stdin_open: true
     depends_on:
       - backend
   backend:

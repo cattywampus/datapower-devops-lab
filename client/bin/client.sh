@@ -3,11 +3,17 @@
 # Loop for up to 20 consecutive failures
 for (( failures=0; failures<20; ))
 do
-  # Issue the curl command with urls from script args
-  curl -f -k -s "$@"
-  # save the exit code of curl fo ruse in comparison and exit
-  rc=$?
-  if [ $rc = 0 ]
+  rcsum=0
+  for url in "$@"
+  do
+    echo "vvvv curl $url vvvv"
+    curl -f -k -s "$url"
+    rc=$?
+    rcsum=$((rcsum + rc))
+    echo "^^^^ curl $url ^^^^ rc=$rc"
+  done
+
+  if [ $rcsum = 0 ]
   then
     failures=0
     if [ ! "$CONTINUOUS" = "true" ]
@@ -17,10 +23,10 @@ do
     fi
   else
     failures=$((failures + 1))
-    echo FAILURE $failures rc=$rc
+    echo FAILURE $failures rc=$rcsum
   fi
   # otherwise wait a second and try again
   sleep 5
 done
 
-exit $rc
+exit $rcsum

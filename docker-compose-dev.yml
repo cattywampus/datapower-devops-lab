@@ -14,7 +14,7 @@ services:
       - ./datapower/config:/drouter/config
       - ./datapower/local:/drouter/local
     ports:
-      - "80:80"
+      - "8888:80"
       - "443:443"
       - "9090:9090"
   backend:
